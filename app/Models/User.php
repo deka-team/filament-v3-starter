@@ -24,6 +24,8 @@ class User extends Authenticatable implements FilamentUser
      */
     protected $fillable = [
         'name',
+        'username',
+        'phone',
         'email',
         'password',
     ];
@@ -44,6 +46,7 @@ class User extends Authenticatable implements FilamentUser
      * @var array<string, string>
      */
     protected $casts = [
+        'phone_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
