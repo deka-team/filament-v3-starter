@@ -30,8 +30,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('/')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
+            ->font('DM Sans')
             ->renderHook('panels::styles.before', fn (): string => Blade::render(<<<HTML
                 <style>
                     /** Setting Base Font */
