@@ -12,6 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Filament\Pages\Auth\Login as Component;
@@ -50,12 +51,19 @@ class Login extends Component implements HasForms
         try {
             $this->rateLimit(5);
         } catch (TooManyRequestsException $exception) {
-            throw ValidationException::withMessages([
-                'username' => __('filament::login.messages.throttled', [
+            Notification::make()
+                ->title(__('filament-panels::pages/auth/login.notifications.throttled.title', [
                     'seconds' => $exception->secondsUntilAvailable,
                     'minutes' => ceil($exception->secondsUntilAvailable / 60),
-                ]),
-            ]);
+                ]))
+                ->body(array_key_exists('body', __('filament-panels::pages/auth/login.notifications.throttled') ?: []) ? __('filament-panels::pages/auth/login.notifications.throttled.body', [
+                    'seconds' => $exception->secondsUntilAvailable,
+                    'minutes' => ceil($exception->secondsUntilAvailable / 60),
+                ]) : null)
+                ->danger()
+                ->send();
+
+            return null;
         }
 
         $data = $this->form->getState();
@@ -65,7 +73,7 @@ class Login extends Component implements HasForms
             'password' => $data['password'],
         ], $data['remember'])) {
             throw ValidationException::withMessages([
-                'username' => __('filament::login.messages.failed'),
+                'username' => __('filament-panels::pages/auth/login.messages.failed'),
             ]);
         }
 
