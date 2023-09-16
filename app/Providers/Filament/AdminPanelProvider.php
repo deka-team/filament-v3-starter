@@ -13,6 +13,8 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentView;
+use Filament\Support\View\Components\Modal;
+use Filament\Tables\Table;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -25,6 +27,18 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        Modal::closedByClickingAway(false);
+        Table::configureUsing(function (Table $table): void {
+            $table->defaultPaginationPageOption(25)
+                ->paginationPageOptions([10, 25, 50, 100]);
+        });
+    }
+
     public function panel(Panel $panel): Panel
     {
         return $panel
