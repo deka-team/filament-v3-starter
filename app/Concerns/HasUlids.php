@@ -34,7 +34,7 @@ trait HasUlids
      */
     public function newUniqueId()
     {
-        return Str::ulid());
+        return Str::ulid();
     }
 
     /**
