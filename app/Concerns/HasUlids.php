@@ -34,7 +34,7 @@ trait HasUlids
      */
     public function newUniqueId()
     {
-        return Str::ulid();
+        return (string) Str::ulid();
     }
 
     /**
@@ -88,3 +88,4 @@ trait HasUlids
         return $this->incrementing;
     }
 }
+
