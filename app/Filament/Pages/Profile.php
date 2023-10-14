@@ -63,6 +63,13 @@ class Profile extends Page implements HasForms
                                 Rule::unique('users', 'email')->ignore($this->user?->id),
                             ])
                             ->columnSpanFull(),
+                        Forms\Components\TextInput::make('username')
+                            ->inlineLabel()
+                            ->required()
+                            ->rules([
+                                Rule::unique('users', 'username')->ignore($this->user?->id),
+                            ])
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('phone')
                             ->inlineLabel()
                             ->rules([
