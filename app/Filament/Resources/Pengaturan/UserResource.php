@@ -32,6 +32,11 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required(),
+                Forms\Components\TextInput::make('username')
+                    ->unique(ignoreRecord: true)
+                    ->required(),
+                Forms\Components\TextInput::make('phone')
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->maxLength(255)
@@ -55,8 +60,16 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('username')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label("Created At")
