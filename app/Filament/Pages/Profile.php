@@ -36,6 +36,7 @@ class Profile extends Page implements HasForms
             'name' => $this->user?->name,
             'email' => $this->user?->email,
             'phone' => $this->user?->phone,
+            'username' => $this->user?->username,
             'current_password' => null,
             'password' => null,
             'password_confirmation' => null,
