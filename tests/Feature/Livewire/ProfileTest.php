@@ -21,10 +21,8 @@ class ProfileTest extends TestCase
             'email_verified_at' => now(),
             'password' => bcrypt('filament-starter'),
         ]);
-        
         Livewire::actingAs($user)
             ->test(Profile::class)
-            ->set('user', $user)
             ->assertStatus(200);
     }
 }
