@@ -117,6 +117,7 @@ class Profile extends Page implements HasForms
 
         $update = [
             'name' => $input['name'],
+            'username' => $input['username'],
             'email' => $input['email'],
             'phone' => $input['phone'],
         ];
