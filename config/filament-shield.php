@@ -1,8 +1,10 @@
 <?php
 
+use App\Filament\Resources\Pengaturan\RoleResource;
+
 return [
     'shield_resource' => [
-        'should_register_navigation' => true,
+        'should_register_navigation' => false,
         'slug' => 'pengaturan/roles',
         'navigation_sort' => -1,
         'navigation_badge' => true,
@@ -70,7 +72,7 @@ return [
         ],
 
         'resources' => [
-
+            RoleResource::class,
         ],
     ],
 
