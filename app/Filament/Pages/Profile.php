@@ -87,7 +87,7 @@ class Profile extends Page implements HasForms
                             ->inlineLabel()
                             ->password()
                             ->columnSpanFull()
-                            ->helperText('Leave empty if you don want change password')
+                            ->helperText('Leave empty if you dont wanna change password')
                             ->autocomplete('off'),
                         Forms\Components\TextInput::make('password')
                             ->label('New Password')
