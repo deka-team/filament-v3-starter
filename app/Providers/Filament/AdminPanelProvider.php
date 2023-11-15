@@ -16,6 +16,7 @@ use Filament\Support\Facades\FilamentView;
 use Filament\Support\View\Components\Modal;
 use Filament\Tables\Table;
 use Filament\Widgets;
+use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -62,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
                     }
                 </style>
             HTML))
+            ->renderHook('panels::resource.pages.list-records.table.before', fn (): View => view('components.total-records'))
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
             ])
