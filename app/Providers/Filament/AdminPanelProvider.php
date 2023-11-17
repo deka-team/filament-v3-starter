@@ -54,6 +54,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->spa()
             ->font('DM Sans')
             ->renderHook('panels::styles.before', fn (): string => Blade::render(<<<HTML
                 <style>
