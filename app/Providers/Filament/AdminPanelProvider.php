@@ -56,6 +56,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->spa()
             ->font('DM Sans')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->renderHook('panels::styles.before', fn (): string => Blade::render(<<<HTML
                 <style>
                     /** Setting Base Font */
