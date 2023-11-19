@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
@@ -40,11 +41,12 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->maxLength(255)
-                    ->dehydrateStateUsing(static function ($state) use ($form) {
-                        return !empty($state) ? Hash::make($state) : null;
-
-                        $user = User::find($form->getColumns());
-                        return $user ? $user->password : null;
+                    ->dehydrateStateUsing(static function (?string $state, string $operation){
+                        if($operation === 'create'){
+                            return !empty($state) ? Hash::make($state) : null;
+                        }else{
+                            return Hash::needsRehash($state) ? Hash::make($state) : $state;
+                        }
                     }),
                 Forms\Components\Select::make('roles')
                     ->multiple()
@@ -105,14 +107,14 @@ class UserResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -120,5 +122,5 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
-    }    
+    }
 }
