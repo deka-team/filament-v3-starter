@@ -15,10 +15,10 @@ devDependencies:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
   axios:
-    specifier: ^1.1.2
+    specifier: ^1.6.2
     version: 1.6.2
   laravel-vite-plugin:
-    specifier: ^0.8.0
+    specifier: ^0.8.1
     version: 0.8.1(vite@4.5.0)
   postcss:
     specifier: ^8.4.31
