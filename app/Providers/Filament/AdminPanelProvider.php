@@ -8,6 +8,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -48,6 +49,13 @@ class AdminPanelProvider extends PanelProvider
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->url(fn() => Profile::getUrl()),
+            ])
+            ->navigationItems([
+                NavigationItem::make('pulse')
+                    ->label('Pulse')
+                    ->icon('carbon-activity')
+                    ->sort(999)
+                    ->url(fn () => url(config('pulse.path')), shouldOpenInNewTab: true),
             ])
             ->path('/')
             ->login(Login::class)
