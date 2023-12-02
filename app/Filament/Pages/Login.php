@@ -13,9 +13,8 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Notifications\Notification;
-use Illuminate\Contracts\View\View;
-use Illuminate\Validation\ValidationException;
 use Filament\Pages\Auth\Login as Component;
+use Illuminate\Validation\ValidationException;
 
 /**
  * @property ComponentContainer $form
@@ -26,10 +25,13 @@ class Login extends Component implements HasForms
     use WithRateLimiting;
 
     public $username = '';
+
     public $password = '';
+
     public $tahun = '';
+
     public $remember = false;
-    
+
     public $useTahun = false;
 
     public function mount(): void
@@ -38,7 +40,7 @@ class Login extends Component implements HasForms
             redirect()->intended(Filament::getUrl());
         }
 
-        if($this->useTahun){
+        if ($this->useTahun) {
             $this->form->fill([
                 'tahun' => date('Y'),
             ]);
@@ -68,7 +70,7 @@ class Login extends Component implements HasForms
 
         $data = $this->form->getState();
 
-        if (!Filament::auth()->attempt([
+        if (! Filament::auth()->attempt([
             'username' => $data['username'],
             'password' => $data['password'],
         ], $data['remember'])) {
@@ -79,10 +81,9 @@ class Login extends Component implements HasForms
 
         session()->regenerate();
 
-        if($this->useTahun){
+        if ($this->useTahun) {
             session()->put('tahun', $data['tahun']);
         }
-
 
         return app(LoginResponse::class);
     }
@@ -103,7 +104,7 @@ class Login extends Component implements HasForms
             Select::make('tahun')
                 ->options(collect(range($yearStart, date('Y')))->mapWithKeys(fn ($year) => [$year => $year]))
                 ->required()
-                ->hidden(!$this->useTahun),
+                ->hidden(! $this->useTahun),
             Checkbox::make('remember')
                 ->label('Ingat Saya'),
         ];

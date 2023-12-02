@@ -3,25 +3,31 @@
 namespace App\Filament\Pages;
 
 use App\Models\User;
+use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Forms;
 use Filament\Notifications\Notification;
-use Illuminate\Validation\Rule;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class Profile extends Page implements HasForms
 {
     use InteractsWithForms;
+
     public ?array $data = [];
+
     protected static ?string $navigationIcon = 'heroicon-m-user-circle';
+
     protected static ?string $navigationGroup = 'Pengaturan';
+
     protected static ?string $title = 'Profil';
+
     protected static string $view = 'filament.pages.profile';
+
     public User $user;
 
     public function mount(): void
@@ -77,7 +83,7 @@ class Profile extends Page implements HasForms
                             ])
                             ->columnSpanFull(),
                     ])->extraAttributes([
-                        'class' => 'bg-white dark:bg-gray-800'
+                        'class' => 'bg-white dark:bg-gray-800',
                     ]),
                 Forms\Components\Fieldset::make('Password')
                     ->schema([
@@ -104,11 +110,11 @@ class Profile extends Page implements HasForms
                             ->columnSpanFull()
                             ->autocomplete('off'),
                     ])->extraAttributes([
-                        'class' => 'bg-white dark:bg-gray-800'
+                        'class' => 'bg-white dark:bg-gray-800',
                     ]),
             ])
             ->statePath('data')
-            ->model($this->user);;
+            ->model($this->user);
     }
 
     public function submit()

@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Profile;
 use App\Filament\Pages\Login;
+use App\Filament\Pages\Profile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -13,7 +13,6 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Support\Facades\FilamentView;
 use Filament\Support\View\Components\Modal;
 use Filament\Tables\Table;
 use Filament\Widgets;
@@ -48,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->userMenuItems([
                 'profile' => MenuItem::make()
-                    ->url(fn() => Profile::getUrl()),
+                    ->url(fn () => Profile::getUrl()),
             ])
             ->navigationItems([
                 NavigationItem::make('pulse')
@@ -65,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->font('DM Sans')
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->renderHook('panels::styles.before', fn (): string => Blade::render(<<<HTML
+            ->renderHook('panels::styles.before', fn (): string => Blade::render(<<<'HTML'
                 <style>
                     /** Setting Base Font */
                     html, body{
@@ -74,11 +73,11 @@ class AdminPanelProvider extends PanelProvider
                 </style>
             HTML))
             ->renderHook('panels::resource.pages.list-records.table.before', fn (): View => view('components.total-records'))
-            ->renderHook('panels::resource.pages.list-records.table.after', fn (): string => Blade::render(<<<HTML
+            ->renderHook('panels::resource.pages.list-records.table.after', fn (): string => Blade::render(<<<'HTML'
                 <x-modal-loading wire:loading wire:target="gotoPage,nextPage,previousPage,mountTableAction" />
             HTML))
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

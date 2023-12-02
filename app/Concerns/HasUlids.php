@@ -49,11 +49,11 @@ trait HasUlids
      */
     public function resolveRouteBindingQuery($query, $value, $field = null)
     {
-        if ($field && in_array($field, $this->uniqueIds()) && !Str::isUlid($value)) {
+        if ($field && in_array($field, $this->uniqueIds()) && ! Str::isUlid($value)) {
             throw (new ModelNotFoundException)->setModel(get_class($this), $value);
         }
 
-        if (!$field && in_array($this->getRouteKeyName(), $this->uniqueIds()) && !Str::isUlid($value)) {
+        if (! $field && in_array($this->getRouteKeyName(), $this->uniqueIds()) && ! Str::isUlid($value)) {
             throw (new ModelNotFoundException)->setModel(get_class($this), $value);
         }
 
@@ -88,4 +88,3 @@ trait HasUlids
         return $this->incrementing;
     }
 }
-

@@ -2,17 +2,16 @@
 
 namespace App\Filament\Resources\Pengaturan;
 
+use App\Filament\Resources\Pengaturan\RoleResource\Pages;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use App\Filament\Resources\Pengaturan\RoleResource\Pages;
+use BezhanSalleh\FilamentShield\Resources\RoleResource as Resource;
 use BezhanSalleh\FilamentShield\Support\Utils;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action as FormAction;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
-use BezhanSalleh\FilamentShield\Resources\RoleResource as Resource;
-use Filament\Facades\Filament;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
@@ -159,7 +158,7 @@ class RoleResource extends Resource implements HasShieldPermissions
         return collect(static::getResources())->sortKeys()->reduce(function ($entities, $entity) {
 
             $entities[] = Forms\Components\Section::make(FilamentShield::getLocalizedResourceLabel($entity['fqcn']))
-                ->description(fn () => new HtmlString('<span style="word-break: break-word;">' . Utils::showModelPath($entity['fqcn']) . '</span>'))
+                ->description(fn () => new HtmlString('<span style="word-break: break-word;">'.Utils::showModelPath($entity['fqcn']).'</span>'))
                 ->compact()
                 ->schema([
                     Forms\Components\CheckboxList::make($entity['resource'])
@@ -218,7 +217,7 @@ class RoleResource extends Resource implements HasShieldPermissions
             ->unique()
             ->filter(function ($resource) {
                 if (Utils::isGeneralExcludeEnabled()) {
-                    return !in_array(
+                    return ! in_array(
                         $resource,
                         Utils::getExcludedResouces()
                     );
@@ -252,7 +251,7 @@ class RoleResource extends Resource implements HasShieldPermissions
     {
         return collect(Utils::getResourcePermissionPrefixes($entity['fqcn']))
             ->flatMap(fn ($permission) => [
-                $permission . '_' . $entity['resource'] => FilamentShield::getLocalizedResourcePermissionLabel($permission),
+                $permission.'_'.$entity['resource'] => FilamentShield::getLocalizedResourcePermissionLabel($permission),
             ])
             ->toArray();
     }
@@ -345,7 +344,7 @@ class RoleResource extends Resource implements HasShieldPermissions
         $resourcePermissions = collect();
         collect(static::getResources())->each(function ($entity) use ($resourcePermissions) {
             collect(Utils::getResourcePermissionPrefixes($entity['fqcn']))->map(function ($permission) use ($resourcePermissions, $entity) {
-                $resourcePermissions->push((string) Str::of($permission . '_' . $entity['resource']));
+                $resourcePermissions->push((string) Str::of($permission.'_'.$entity['resource']));
             });
         });
 

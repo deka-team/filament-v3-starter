@@ -5,15 +5,13 @@ namespace Tests\Feature\Livewire;
 use App\Filament\Pages\Profile;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class EditProfileTest extends TestCase
 {
     use RefreshDatabase;
+
     /** @test */
     public function edit_successfully()
     {

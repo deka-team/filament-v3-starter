@@ -14,6 +14,7 @@ class NumberInput extends TextInput
     public function precision(mixed $precision): static
     {
         $this->precision = $precision;
+
         return $this;
     }
 
@@ -24,10 +25,10 @@ class NumberInput extends TextInput
 
     protected function setUp(): void
     {
-        $this->mask(RawJs::make(<<<JS
-                \$money(\$input)
+        $this->mask(RawJs::make(<<<'JS'
+                $money($input)
             JS))
-            ->formatStateUsing(fn(null|string $state) => number_format($state, $this->getPrecision($state)))
+            ->formatStateUsing(fn (?string $state) => number_format($state, $this->getPrecision($state)))
             ->beforeStateDehydrated(function (Get $get, Set $set) {
                 $name = $this->getName();
                 $value = preg_replace('/[^0-9.]/', '', $get($name));

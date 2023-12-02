@@ -4,11 +4,9 @@ namespace Tests\Feature;
 
 use App\Filament\Pages\Login;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Livewire\Livewire;
+use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
@@ -17,7 +15,6 @@ class LoginTest extends TestCase
     /**
      * A basic feature test example.
      */
-
     public function test_login_screen_can_be_rendered()
     {
         $response = $this->get('/login');
@@ -38,10 +35,9 @@ class LoginTest extends TestCase
         Livewire::test(Login::class)
             ->fill([
                 'username' => $user->username,
-                'password' => 'filament-starter'
+                'password' => 'filament-starter',
             ])
             ->call('authenticate')
             ->assertRedirect('/');
     }
-
 }

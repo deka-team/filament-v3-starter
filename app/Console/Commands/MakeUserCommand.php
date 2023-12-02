@@ -55,7 +55,7 @@ class MakeUserCommand extends Command
             'email' => $this->options['email'] ?? text(
                 label: 'Email address',
                 validate: fn (string $email): ?string => $email ? match (true) {
-                    !filter_var($email, FILTER_VALIDATE_EMAIL) => 'The email address must be valid.',
+                    ! filter_var($email, FILTER_VALIDATE_EMAIL) => 'The email address must be valid.',
                     static::getUserModel()::where('email', $email)->exists() => 'A user with this email address already exists',
                     default => null,
                 } : null,

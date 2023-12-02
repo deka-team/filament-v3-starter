@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\Pengaturan\RoleResource\Pages;
 
 use App\Filament\Resources\Pengaturan\RoleResource;
+use BezhanSalleh\FilamentShield\Resources\RoleResource\Pages\EditRole as EditRecord;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Actions;
-use BezhanSalleh\FilamentShield\Resources\RoleResource\Pages\EditRole as EditRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
