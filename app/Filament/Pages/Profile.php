@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Rawilk\FilamentPasswordInput\Password;
 
 class Profile extends Page implements HasForms
 {
@@ -83,34 +84,34 @@ class Profile extends Page implements HasForms
                             ])
                             ->columnSpanFull(),
                     ])->extraAttributes([
-                        'class' => 'bg-white dark:bg-gray-800',
+                        'class' => 'bg-white dark:bg-white/5',
                     ]),
                 Forms\Components\Fieldset::make('Password')
                     ->schema([
-                        Forms\Components\TextInput::make('current_password')
+                        Password::make('current_password')
                             ->label('Old Password')
                             ->requiredWith('password')
                             ->inlineLabel()
                             ->password()
                             ->columnSpanFull()
                             ->helperText('Leave empty if you dont wanna change password')
-                            ->autocomplete('off'),
-                        Forms\Components\TextInput::make('password')
+                            ->autocomplete('new-current-password'),
+                        Password::make('password')
                             ->label('New Password')
                             ->requiredWith('current_password')
                             ->inlineLabel()
                             ->password()
                             ->confirmed()
                             ->columnSpanFull()
-                            ->autocomplete('off'),
-                        Forms\Components\TextInput::make('password_confirmation')
+                            ->autocomplete('new-password'),
+                        Password::make('password_confirmation')
                             ->label('New Password (Confirm)')
                             ->inlineLabel()
                             ->password()
                             ->columnSpanFull()
-                            ->autocomplete('off'),
+                            ->autocomplete('new-password-confirmation'),
                     ])->extraAttributes([
-                        'class' => 'bg-white dark:bg-gray-800',
+                        'class' => 'bg-white dark:bg-white/5',
                     ]),
             ])
             ->statePath('data')
