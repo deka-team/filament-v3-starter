@@ -6,11 +6,14 @@ use App\Filament\Resources\Pengaturan\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Rawilk\FilamentPasswordInput\Password;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
@@ -37,16 +40,25 @@ class UserResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('phone')
                     ->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('password')
-                    ->password()
+                Password::make('password')
                     ->maxLength(255)
+                    ->nullable(fn(?string $operation) => $operation === 'edit')
+                    ->required(fn(?string $operation) => $operation === 'create')
                     ->dehydrateStateUsing(static function (?string $state, string $operation) {
                         if ($operation === 'create') {
                             return ! empty($state) ? Hash::make($state) : null;
-                        } else {
+                        } else if($state){
                             return Hash::needsRehash($state) ? Hash::make($state) : $state;
                         }
-                    }),
+                    })
+                    ->suffixAction(
+                        Forms\Components\Actions\Action::make('generate')
+                            ->tooltip('Generate Password')
+                            ->icon('heroicon-o-sparkles')
+                            ->action(function(Set $set){
+                                $set('password', Str::random(6));
+                            })
+                    ),
                 Forms\Components\Select::make('roles')
                     ->multiple()
                     ->preload()
@@ -68,6 +80,10 @@ class UserResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->badge()
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false)
@@ -88,6 +104,10 @@ class UserResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
                 Tables\Filters\Filter::make('unverified')
                     ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
+                Tables\Filters\SelectFilter::make('roles')
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->multiple(),
             ])
             ->actions([
                 Impersonate::make(),
