@@ -23,8 +23,10 @@ class EditUser extends EditRecord
      */
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        if(is_null($data['password'])) unset($data['password']);
-        
+        if (is_null($data['password'])) {
+            unset($data['password']);
+        }
+
         return $data;
     }
 }

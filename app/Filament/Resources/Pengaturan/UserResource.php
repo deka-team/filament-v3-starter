@@ -42,12 +42,12 @@ class UserResource extends Resource
                     ->unique(ignoreRecord: true),
                 Password::make('password')
                     ->maxLength(255)
-                    ->nullable(fn(?string $operation) => $operation === 'edit')
-                    ->required(fn(?string $operation) => $operation === 'create')
+                    ->nullable(fn (?string $operation) => $operation === 'edit')
+                    ->required(fn (?string $operation) => $operation === 'create')
                     ->dehydrateStateUsing(static function (?string $state, string $operation) {
                         if ($operation === 'create') {
                             return ! empty($state) ? Hash::make($state) : null;
-                        } else if($state){
+                        } elseif ($state) {
                             return Hash::needsRehash($state) ? Hash::make($state) : $state;
                         }
                     })
@@ -55,7 +55,7 @@ class UserResource extends Resource
                         Forms\Components\Actions\Action::make('generate')
                             ->tooltip('Generate Password')
                             ->icon('heroicon-o-sparkles')
-                            ->action(function(Set $set){
+                            ->action(function (Set $set) {
                                 $set('password', Str::random(6));
                             })
                     ),
