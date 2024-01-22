@@ -312,15 +312,6 @@ class RoleResource extends Resource implements HasShieldPermissions
         }
     }
 
-    public static function getPageOptions(): array
-    {
-        return collect(FilamentShield::getPages())
-            ->flatMap(fn ($pagePermission) => [
-                $pagePermission => FilamentShield::getLocalizedPageLabel($pagePermission),
-            ])
-            ->toArray();
-    }
-
     public static function getWidgetOptions(): array
     {
         return collect(FilamentShield::getWidgets())
