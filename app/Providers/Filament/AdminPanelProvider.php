@@ -36,7 +36,8 @@ class AdminPanelProvider extends PanelProvider
         Modal::closedByClickingAway(false);
         Table::configureUsing(function (Table $table): void {
             $table->defaultPaginationPageOption(25)
-                ->paginationPageOptions([10, 25, 50, 100]);
+                ->paginationPageOptions([10, 25, 50, 100])
+                ->searchDebounce('1000ms');
         });
     }
 
@@ -74,7 +75,7 @@ class AdminPanelProvider extends PanelProvider
             HTML))
             ->renderHook('panels::resource.pages.list-records.table.before', fn (): View => view('components.total-records'))
             ->renderHook('panels::resource.pages.list-records.table.after', fn (): string => Blade::render(<<<'HTML'
-                <x-modal-loading wire:loading wire:target="gotoPage,nextPage,previousPage,mountTableAction" />
+                <x-modal-loading wire:loading wire:target="gotoPage,nextPage,previousPage,sortTable,tableRecordsPerPage,tableGrouping,tableGroupingDirection,tableSearch,tableFilters,resetTableSearch,mountTableAction" />
             HTML))
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
