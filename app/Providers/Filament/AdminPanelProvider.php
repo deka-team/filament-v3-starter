@@ -76,7 +76,7 @@ class AdminPanelProvider extends PanelProvider
             HTML))
             ->renderHook('panels::resource.pages.list-records.table.before', fn (): View => view('components.total-records'))
             ->renderHook('panels::resource.pages.list-records.table.after', fn (): string => Blade::render(<<<'HTML'
-                <x-modal-loading wire:loading wire:target="gotoPage,nextPage,previousPage,sortTable,tableRecordsPerPage,tableGrouping,tableGroupingDirection,tableSearch,tableFilters,resetTableSearch,mountTableAction" />
+                <x-modal-loading wire:loading wire:target="gotoPage,nextPage,previousPage,sortTable,tableRecordsPerPage,tableGrouping,tableGroupingDirection,tableSearch,tableFilters,toggledTableColumns,resetTableSearch,mountTableAction" />
             HTML))
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
