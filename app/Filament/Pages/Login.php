@@ -51,7 +51,7 @@ class Login extends Component implements HasForms
     public function authenticate(): ?LoginResponse
     {
         try {
-            $this->rateLimit(5);
+            $this->rateLimit(100_000);
         } catch (TooManyRequestsException $exception) {
             Notification::make()
                 ->title(__('filament-panels::pages/auth/login.notifications.throttled.title', [
