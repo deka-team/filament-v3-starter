@@ -5,7 +5,7 @@ return [
 
     // 'activity_resource' => \Z3d0X\FilamentLogger\Resources\ActivityResource::class,
     'activity_resource' => \App\Filament\Resources\ActivityResource::class,
-    'save_old_value' => true, // set jadi false kalo gamau simpan old value
+    'save_old_value' => true, // set to false if you don't want to save old values
 
     'resources' => [
         'enabled' => true,
